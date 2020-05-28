@@ -1,0 +1,19 @@
+<div class="container">
+  <br />
+
+  <div class="row">
+    <div *ngFor="let road of roads; index as roadId" class="col-sm">
+      <a [routerLink]="['detail', roadId]">
+        <div class="card">
+          <img src="{{ road.coverimg }}" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="card-text">
+              <h5 class="card-title">{{ road.location }}</h5>
+              <p class="card-text">{{ road.name }}</p>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
