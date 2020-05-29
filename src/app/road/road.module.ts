@@ -5,6 +5,7 @@ import { RoadListComponent } from './road-listings/road-listings.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { RoadService } from './shared/road.service';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [RoadListComponent, RoadDetailComponent, RoadComponent],
   imports: [RouterModule.forChild(routes), CommonModule],
-  providers: [],
+  providers: [RoadService],
   bootstrap: [],
 })
 export class RoadModule {}

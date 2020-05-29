@@ -1,5 +1,5 @@
-import { roads } from './../../roads';
 import { Component, OnInit } from '@angular/core';
+import { RoadService } from '../shared/road.service';
 
 @Component({
   selector: 'app-road-listings',
@@ -9,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class RoadListComponent implements OnInit {
   roads: any;
 
-  constructor() {}
+  constructor(private RoadService: RoadService) {}
 
   ngOnInit(): void {
-    this.roads = roads;
+    this.roads = this.RoadService.getRoads();
   }
 }

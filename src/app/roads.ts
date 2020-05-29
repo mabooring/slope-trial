@@ -13,6 +13,7 @@ export const roads = [
       'ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２',
     headingtext3:
       'Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestaseget quam.Vestibulum id ligula porta felis euismod semper.Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.',
+    roadImgUrl: '#',
   },
   {
     coverimg: './assets/img/norimen_cover.jpg',
@@ -28,6 +29,7 @@ export const roads = [
       'ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２',
     headingtext3:
       'Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestaseget quam.Vestibulum id ligula porta felis euismod semper.Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.',
+    roadImgUrl: '#',
   },
 
   {
@@ -44,5 +46,6 @@ export const roads = [
       'ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２　ヘッディング文章２',
     headingtext3:
       'Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestaseget quam.Vestibulum id ligula porta felis euismod semper.Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.',
+    roadImgUrl: '#',
   },
 ];
