@@ -13,7 +13,8 @@ const routes: Routes = [
     component: RoadComponent,
     children: [
       { path: '', component: RoadListComponent },
-      { path: 'detail/:roadId', component: RoadDetailComponent },
+      //{ path: 'detail/:roadId', component: RoadDetailComponent },
+      { path: ':roadId', component: RoadDetailComponent },
     ],
   },
 ];

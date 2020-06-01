@@ -2,7 +2,7 @@ export const roads = [
   {
     coverimg: './assets/img/norimen_cover.jpg',
     location: '相模原',
-    name: '国道２３４号',
+    name: '国道１号',
     description: 'rankC 道幅狭い',
     heading1: 'ヘッディング１',
     heading2: 'ヘッディング２',
@@ -35,7 +35,7 @@ export const roads = [
   {
     coverimg: './assets/img/norimen_cover.jpg',
     location: '宮崎県道',
-    name: '県道１２号',
+    name: '県道５６号',
     description: '損傷多く　補修が必要　法面の高さ高い',
     heading1: 'ヘッディング１',
     heading2: 'ヘッディング２',

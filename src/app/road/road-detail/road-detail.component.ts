@@ -17,7 +17,17 @@ export class RoadDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.road = this.roadService.getRoadById(+params.get('roadId'));
+      //this.roadObservable  = this.roadService.getRoadById(params.get('roadId'));
+
+      const roadObservable = this.roadService.getRoadById(params.get('roadId'));
+      roadObservable.subscribe(
+        (data) => {
+          this.road = data;
+        },
+        (err) => {
+          console.error('次のエラーが発生しました： ' + err);
+        }
+      );
     });
   }
 }
