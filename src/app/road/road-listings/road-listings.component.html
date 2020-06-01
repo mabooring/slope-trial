@@ -3,7 +3,7 @@
 
   <div class="row">
     <div *ngFor="let road of roads; index as roadId" class="col-sm">
-      <a [routerLink]="['detail', roadId]">
+      <a [routerLink]="[road._id]">
         <div class="card">
           <img src="{{ road.coverimg }}" class="card-img-top" alt="..." />
           <div class="card-body">

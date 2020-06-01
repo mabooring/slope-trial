@@ -1,4 +1,4 @@
-import { roads } from './../../roads';
+import { RoadService } from './../shared/road.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,11 +10,24 @@ import { ActivatedRoute } from '@angular/router';
 export class RoadDetailComponent implements OnInit {
   road;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private roadService: RoadService
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.road = roads[+params.get('roadId')];
+      //this.roadObservable  = this.roadService.getRoadById(params.get('roadId'));
+
+      const roadObservable = this.roadService.getRoadById(params.get('roadId'));
+      roadObservable.subscribe(
+        (data) => {
+          this.road = data;
+        },
+        (err) => {
+          console.error('次のエラーが発生しました： ' + err);
+        }
+      );
     });
   }
 }
