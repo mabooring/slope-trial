@@ -1,19 +1,27 @@
-<div class="container">
-  <br />
+<div class="wrapper">
+  <div
+    class="page-header section-dark"
+    style="background-image: url('assets/img/norimen_cover.jpg');"
+  >
+    <div class="filter"></div>
+  </div>
+  <div class="container">
+    <br />
 
-  <div class="row">
-    <div *ngFor="let road of roads; index as roadId" class="col-sm">
-      <a [routerLink]="[road._id]">
-        <div class="card">
-          <img src="{{ road.coverimg }}" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <div class="card-text">
-              <h5 class="card-title">{{ road.location }}</h5>
-              <p class="card-text">{{ road.name }}</p>
+    <div class="row">
+      <div *ngFor="let road of roads; index as roadId" class="col-sm">
+        <a [routerLink]="[road._id]">
+          <div class="card">
+            <img src="{{ road.coverimg }}" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <div class="card-text">
+                <h5 class="card-title">{{ road.location }}</h5>
+                <p class="card-text">{{ road.name }}</p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
   </div>
 </div>

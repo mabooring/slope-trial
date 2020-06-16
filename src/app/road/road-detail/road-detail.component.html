@@ -1,19 +1,18 @@
 <div *ngIf="road">
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="first-slide" src="{{ road.coverimg }}" alt="First slide" />
-        <div class="container">
-          <div class="carousel-caption text-left">
-            <h1>{{ road.location }}</h1>
-            <p>{{ road.description }}</p>
-            <p>
-              <a class="btn btn-lg btn-primary" href="#" role="button">{{
-                road.name
-              }}</a>
-            </p>
-          </div>
-        </div>
+  <div
+    class="page-header section-dark"
+    [ngStyle]="{ 'background-image': 'url(' + road.coverimg + ')' }"
+  >
+    <!-- <div class="filter"></div> -->
+    <div class="container">
+      <div class="carousel-caption text-left">
+        <h1>{{ road.location }}</h1>
+        <p>{{ road.description }}</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="#" role="button">{{
+            road.name
+          }}</a>
+        </p>
       </div>
     </div>
   </div>
