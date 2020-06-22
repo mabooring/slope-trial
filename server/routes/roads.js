@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Road = require("../model/road");
+const UserCtrl = require("../controller/user");
+
+router.get("/secret", UserCtrl.authMiddleware, function (req, res) {
+  return res.json({ secret: true });
+});
 
 router.get("", function (req, res) {
   Road.find({}, function (err, foundRoads) {
@@ -10,7 +15,7 @@ router.get("", function (req, res) {
 
 router.get("/:roadId", function (req, res) {
   const roadId = req.params.roadId;
-  Road.findById(roadId, function (err, foundRoad) {
+  Road.findById(roadId, UserCtrl.authMiddleware, function (err, foundRoad) {
     if (err) {
       return res
         .status(422)

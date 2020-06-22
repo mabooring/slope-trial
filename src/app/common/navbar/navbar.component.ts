@@ -1,3 +1,4 @@
+import { AuthService } from './../../auth/shared/auth.service';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import {
   Location,
@@ -14,7 +15,11 @@ export class NavbarComponent implements OnInit {
   private toggleButton: any;
   private sidebarVisible: boolean;
 
-  constructor(public location: Location, private element: ElementRef) {
+  constructor(
+    public location: Location,
+    private element: ElementRef,
+    public auth: AuthService
+  ) {
     this.sidebarVisible = false;
   }
 
@@ -61,5 +66,8 @@ export class NavbarComponent implements OnInit {
     } else {
       return false;
     }
+  }
+  logout() {
+    this.auth.logout();
   }
 }
