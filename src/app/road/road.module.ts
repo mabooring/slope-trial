@@ -1,3 +1,4 @@
+import { AuthGuard } from './../auth/shared/auth.guard';
 import { RoadComponent } from './road.component';
 import { RoadDetailComponent } from './road-detail/road-detail.component';
 import { RoadListComponent } from './road-listings/road-listings.component';
@@ -14,7 +15,11 @@ const routes: Routes = [
     children: [
       { path: '', component: RoadListComponent },
       //{ path: 'detail/:roadId', component: RoadDetailComponent },
-      { path: ':roadId', component: RoadDetailComponent },
+      {
+        path: ':roadId',
+        component: RoadDetailComponent,
+        canActivate: [AuthGuard],
+      },
     ],
   },
 ];
