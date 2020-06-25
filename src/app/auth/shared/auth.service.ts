@@ -33,10 +33,7 @@ export class AuthService {
   }
 
   isAuthenticated() {
-    const momentData = moment().isBefore(moment.unix(this.decodedToken.exp));
-    // debugger;
-    return momentData;
-    // return moment().isBefore(moment.unix(this.decodedToken.userexp));
+    return moment().isBefore(moment.unix(this.decodedToken.exp));
   }
 
   register(userData: any): Observable<any> {

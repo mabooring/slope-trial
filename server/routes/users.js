@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const config = require("../config");
 
 router.post("/login", function (req, res) {
-  //DEBUG
   const { email, password } = req.body;
 
   if (!email) {
