@@ -38,7 +38,7 @@ router.post("/login", function (req, res) {
     const token = jwt.sign(
       {
         userId: foundUser.id,
-        usernema: foundUser.username,
+        username: foundUser.username,
       },
       config.SECRET,
       { expiresIn: "1h" }
@@ -70,8 +70,17 @@ router.post("/register", function (req, res) {
       errors: [{ title: "User error", detail: "Please check password!" }],
     });
   }
+  if (username !== "root") {
+    return res.status(422).send({
+      errors: [
+        { title: "User error", detail: "Sorry,you don't have privilege!" },
+      ],
+    });
+  }
 
   User.findOne({ email }, function (err, foundUser) {
+    debugger;
+
     if (err) {
       return res.status(422).send({
         errors: [{ title: "User error", detail: "Something went wrong!" }],
