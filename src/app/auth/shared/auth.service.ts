@@ -36,9 +36,14 @@ export class AuthService {
     return moment().isBefore(moment.unix(this.decodedToken.exp));
   }
 
+  isRootUser() {
+    return this.decodedToken.username === 'root';
+  }
+
   register(userData: any): Observable<any> {
     return this.http.post('/api/v1/users/register', userData);
   }
+
   login(userData: any): Observable<any> {
     return this.http.post('/api/v1/users/login', userData).pipe(
       map((token: string) => {
@@ -53,6 +58,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('app-auth');
     localStorage.removeItem('app-meta');
+
     this.decodedToken = new DecodedToken();
     this.router.navigate(['/']);
   }
