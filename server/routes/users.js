@@ -49,6 +49,7 @@ router.post("/login", function (req, res) {
 
 router.post("/register", function (req, res) {
   const { username, email, password, confirmPassword } = req.body;
+  //DEBUG rootユーザーでログインしている場合のみ有効にする
 
   if (!username) {
     return res.status(422).send({
@@ -70,6 +71,7 @@ router.post("/register", function (req, res) {
       errors: [{ title: "User error", detail: "Please check password!" }],
     });
   }
+  //DEBUG rootユーザーでログインしている場合のみ有効にする
   if (username !== "root") {
     return res.status(422).send({
       errors: [
