@@ -15,4 +15,10 @@ export class AuthGuard {
     this.router.navigate(['/login']);
     return false;
   }
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (this.authService.isAuthenticated() && this.authService.isRootUser())
+      return true;
+    this.router.navigate(['/login']);
+    return false;
+  }
 }
