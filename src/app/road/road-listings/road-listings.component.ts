@@ -1,3 +1,4 @@
+import { roads } from './../../roads';
 import { Component, OnInit } from '@angular/core';
 import { RoadService } from '../shared/road.service';
 // import { Observable } from 'rxjs';
@@ -9,8 +10,16 @@ import { RoadService } from '../shared/road.service';
 })
 export class RoadListComponent implements OnInit {
   roads: any;
+  dateData = [];
 
   constructor(private RoadService: RoadService) {}
+
+  setFormattedDate(roads) {
+    roads.forEach((road, index) => {
+      const dData = road.picturedate.substring(0, 10).split('-');
+      this.dateData.push(dData[0] + '年' + dData[1] + '月' + dData[2] + '日');
+    });
+  }
 
   ngOnInit(): void {
     //this.roads = this.RoadService.getRoads();
@@ -18,6 +27,7 @@ export class RoadListComponent implements OnInit {
     roadsObservable.subscribe(
       (data) => {
         this.roads = data;
+        this.setFormattedDate(this.roads);
       },
       (err) => {
         console.error('次のエラーが発生しました： ' + err);
@@ -48,4 +58,12 @@ export class RoadListComponent implements OnInit {
     // });
     // console.log('subscribeから抜けました');
   }
+
+  // setTokyoDate(dateUTC) {
+  //   this.tokyoDate = dateUTC;
+  //   console.log('tokyoDate');
+  //   console.log(this.tokyoDate);
+
+  //   debugger;
+  // }
 }
