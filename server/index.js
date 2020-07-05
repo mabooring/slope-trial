@@ -19,7 +19,7 @@ mongoose
     if (process.env.NODE_ENV !== "production") {
       const fakeDb = new FakeDb();
       //開発環境で必要なときのみコメントを外して初期化を行う
-      //fakeDb.initDb();
+      fakeDb.initDb();
     }
   });
 
