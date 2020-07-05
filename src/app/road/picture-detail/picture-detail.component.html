@@ -1,0 +1,19 @@
+<div class="col-sm" *ngIf="pokemon" class="pokemon">
+  <div class="card">
+    <img
+      src="assets/pokemons/images/{{ pokemon.id | number: '3.0' }}.png"
+      class="card-img-top"
+      alt="..."
+    />
+    <div class="card-body">
+      <p>{{ pokemon.name.japanese }}</p>
+      <!-- DEBUG -->
+      <!-- <p>{{ pokemon.type | type }}</p> -->
+      <p>{{ pokemon.type }}</p>
+      <p>体力: {{ pokemon.base.HP }}</p>
+      <p>攻撃力: {{ pokemon.base.Attack }}</p>
+      <p>防御力: {{ pokemon.base.Defense }}</p>
+      <p>スピード: {{ pokemon.base.Speed }}</p>
+    </div>
+  </div>
+</div>
