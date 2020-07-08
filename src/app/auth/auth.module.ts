@@ -16,7 +16,9 @@ const routes: Routes = [
   //rootユーザーログイン時のみ/registerに移動できる様に変更
   {
     path: 'register',
+    //DEBUG temp
     canActivateChild: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [{ path: '', component: RegisterComponent }],
   },
 ];
