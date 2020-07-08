@@ -12,13 +12,11 @@ import { TokenInterceptor } from './shared/token.interceptor';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  //DEBUG
   //rootユーザーログイン時のみ/registerに移動できる様に変更
   {
     path: 'register',
-    //DEBUG temp
-    canActivateChild: [AuthGuard],
     // canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [{ path: '', component: RegisterComponent }],
   },
 ];
