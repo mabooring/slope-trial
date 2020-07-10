@@ -9,7 +9,7 @@ const path = require("path");
 // node s3_upload.js BUCKET_NAME FILE_NAME
 
 // Upload something into it
-https: AWS.config.loadFromPath("./rootkey.json");
+AWS.config.loadFromPath("./rootkey.json");
 AWS.config.update({ region: "ap-northeast-1" });
 
 // Create S3 service object

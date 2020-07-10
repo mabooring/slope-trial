@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const config = require("./config");
 const FakeDb = require("./fake-db");
+const ExifDb = require("./exif-db");
 
 const roadRoutes = require("./routes/roads");
 const userRoutes = require("./routes/users");
@@ -18,8 +19,10 @@ mongoose
     //本番環境では、DBの初期化はしては行けないので
     if (process.env.NODE_ENV !== "production") {
       const fakeDb = new FakeDb();
+      const exifDb = new ExifDb();
       //開発環境で必要なときのみコメントを外して初期化を行う
-      fakeDb.initDb();
+      // fakeDb.initDb();
+      // exifDb.initDb();
     }
   });
 
