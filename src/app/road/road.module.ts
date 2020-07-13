@@ -1,7 +1,7 @@
 import { PictureDetailComponent } from './picture-detail/picture-detail.component';
 import { AuthGuard } from './../auth/shared/auth.guard';
 import { RoadComponent } from './road.component';
-import { RoadDetailComponent } from './road-detail/road-detail.component';
+import { PictureListComponent } from './picture-listings/picture-listings.component';
 import { RoadListComponent } from './road-listings/road-listings.component';
 
 import { NgModule } from '@angular/core';
@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: '', component: RoadListComponent },
       {
         path: ':roadId',
-        component: RoadDetailComponent,
+        component: PictureListComponent,
         canActivate: [AuthGuard],
       },
       {
@@ -33,7 +33,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     RoadListComponent,
-    RoadDetailComponent,
+    PictureListComponent,
     RoadComponent,
     PictureDetailComponent,
   ],

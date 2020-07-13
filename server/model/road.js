@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const RoadsSchema = new Schema({
   //   author: ObjectId,
+  folderId: String,
   coverimg: String,
   prefecture: { type: String, required: true, max: [60, "最大60文字までです"] },
   area: String,

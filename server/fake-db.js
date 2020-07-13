@@ -4,6 +4,7 @@ class FakeDb {
   constructor() {
     this.roads = [
       {
+        folderId: "Hakone-A1",
         coverimg: "./assets/img/norimen_cover.jpg",
         prefecture: "神奈川県",
         area: "箱根",
@@ -14,6 +15,7 @@ class FakeDb {
         roadImgUrl: "#",
       },
       {
+        folderId: "Hakone-B1",
         coverimg: "./assets/img/norimen_cover.jpg",
         prefecture: "神奈川県",
         area: "箱根",

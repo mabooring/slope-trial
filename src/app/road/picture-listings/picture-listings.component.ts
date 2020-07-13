@@ -1,5 +1,5 @@
-import { POKEMONS } from './../pokemon/pokemons';
-import { RoadService } from './../shared/road.service';
+import { POKEMONS } from '../pokemon/pokemons';
+import { RoadService } from '../shared/road.service';
 import {
   Component,
   OnInit,
@@ -8,14 +8,32 @@ import {
   QueryList,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as AWS from 'aws-sdk';
+
+//DEBUG S3からThumbnailを取得
+var albumBucketName = 's-trial-app';
+AWS.config.region = 'ap-northeast-1';
+// リージョン
+AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+  IdentityPoolId: 'ap-northeast-1:2e21f7bd-3084-4ae8-9b31-f75df168af97',
+});
+// Create a new service object
+var s3 = new AWS.S3({
+  apiVersion: '2006-03-01',
+  params: { Bucket: albumBucketName },
+});
 
 @Component({
-  selector: 'app-road-detail',
-  templateUrl: './road-detail.component.html',
-  styleUrls: ['./road-detail.component.scss'],
+  selector: 'app-picture-listings',
+  templateUrl: './picture-listings.component.html',
+  styleUrls: ['./picture-listings.component.scss'],
 })
-export class RoadDetailComponent implements OnInit {
+export class PictureListComponent implements OnInit {
   road;
+  exif;
+
+  //　S3
+
   //DEBUG サムネイル（仮）でローカルのポケモンを表示
   pokemons = POKEMONS;
   @ViewChildren('checkboxes') checkboxes: QueryList<ElementRef>;
@@ -57,6 +75,18 @@ export class RoadDetailComponent implements OnInit {
         },
         (err) => {
           console.error('次のエラーが発生しました： ' + err);
+        }
+      );
+    });
+
+    this.route.paramMap.subscribe((params) => {
+      const exifObservable = this.roadService.getExifById(params.get('exifId'));
+      exifObservable.subscribe(
+        (data) => {
+          this.exif = data;
+        },
+        (err) => {
+          console.error('EXIFで次のエラーが発生しました： ' + err);
         }
       );
     });

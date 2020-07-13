@@ -7,6 +7,7 @@ const ExifDb = require("./exif-db");
 
 const roadRoutes = require("./routes/roads");
 const userRoutes = require("./routes/users");
+const exifRoutes = require("./routes/exifs");
 const path = require("path");
 
 mongoose
@@ -21,7 +22,7 @@ mongoose
       const fakeDb = new FakeDb();
       const exifDb = new ExifDb();
       //開発環境で必要なときのみコメントを外して初期化を行う
-      // fakeDb.initDb();
+      //fakeDb.initDb();
       // exifDb.initDb();
     }
   });
@@ -29,8 +30,10 @@ mongoose
 const app = express();
 app.use(bodyParser.json());
 
+//DEBUG
 app.use("/api/v1/roads", roadRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/roads", exifRoutes);
 
 if (process.env.NODE_ENV === "production") {
   const appPath = path.join(__dirname, "..", "dist", "slope-traial");
