@@ -8,20 +8,8 @@ import {
   QueryList,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import * as AWS from 'aws-sdk';
-
-//DEBUG S3からThumbnailを取得
-var albumBucketName = 's-trial-app';
-AWS.config.region = 'ap-northeast-1';
-// リージョン
-AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  IdentityPoolId: 'ap-northeast-1:2e21f7bd-3084-4ae8-9b31-f75df168af97',
-});
-// Create a new service object
-var s3 = new AWS.S3({
-  apiVersion: '2006-03-01',
-  params: { Bucket: albumBucketName },
-});
+import { BehaviorSubject } from 'rxjs';
+// import * as AWS from 'aws-sdk';
 
 @Component({
   selector: 'app-picture-listings',
@@ -31,9 +19,9 @@ var s3 = new AWS.S3({
 export class PictureListComponent implements OnInit {
   road;
   exif;
+  thumbnailsList;
 
   //　S3
-
   //DEBUG サムネイル（仮）でローカルのポケモンを表示
   pokemons = POKEMONS;
   @ViewChildren('checkboxes') checkboxes: QueryList<ElementRef>;
@@ -79,16 +67,45 @@ export class PictureListComponent implements OnInit {
       );
     });
 
-    this.route.paramMap.subscribe((params) => {
-      const exifObservable = this.roadService.getExifById(params.get('exifId'));
-      exifObservable.subscribe(
-        (data) => {
-          this.exif = data;
-        },
-        (err) => {
-          console.error('EXIFで次のエラーが発生しました： ' + err);
-        }
-      );
+    // //DEBUG BehaviorSubject
+    // this.thumbnailsSubject = new BehaviorSubject<object[]>([]);
+
+    this.roadService.getThumbnailsInfo('thumbnails').subscribe((obj) => {
+      this.thumbnailsList = obj;
+      console.log('ここ');
+      console.log(this.thumbnailsList);
+      debugger;
     });
+
+    // this.roadService.getThumbnailsList('thumbnails', function (err, data) {
+    //   if (err) {
+    //     console.log('get thumbnailsList err!');
+    //   }
+    //   if (data) {
+    //   //   // this.thumbnailsList = data;
+    //   //   // console.log(this.thumbnailsList);
+    //     var thumbnailsList = data;
+    //     console.log(data);
+    //   }
+    //   this.thumbnailsSubject.subscribe((data) => {
+    //     this.tumbnailInfo = data;
+    //     console.log(this.tumbnailInfo);
+    //     debugger;
+    //   });
+    // });
+
+    // this.route.paramMap.subscribe((params) => {
+    //   const exifObservable = this.roadService.getExifById(params.get('exifId'));
+    //   exifObservable.subscribe(
+    //     (data) => {
+    //       this.exif = data;
+    //     },
+    //     (err) => {
+    //       console.error('EXIFで次のエラーが発生しました： ' + err);
+    //     }
+    //   );
+    // });
+
+    //DEBUG
   }
 }
