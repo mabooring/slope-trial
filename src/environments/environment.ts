@@ -3,9 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
 };
-
+export const AWS_ENV = {
+  region: 'ap-northeast-1',
+  s3: {
+    apiVersion: '2006-03-01',
+    Bucket: 's-trial-app',
+  },
+};
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
