@@ -86,8 +86,9 @@ export class PictureListComponent implements OnInit {
       const roadObservable = this.roadService.getRoadById(params.get('roadId'));
       roadObservable.subscribe(
         (data) => {
-          this.road = data;
+          this.road = data[0];
           console.log('this.road!!', this.road);
+          console.log('road.area!!', this.road.area);
         },
         (err) => {
           console.error('次のエラーが発生しました： ' + err);

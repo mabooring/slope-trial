@@ -9,34 +9,32 @@ const UserCtrl = require("../controllers/user");
 //   return res.json({ secret: true });
 // });
 
-//DEBUG
 router.get("", function (req, res) {
   Road.find({}, function (err, foundRoads) {
     return res.json(foundRoads);
   });
 });
 
-// // DEBUG Exifのgetと共存できない？エラーが出る。
-// router.get("/:roadId", UserCtrl.authMiddleware, function (req, res) {
-//   const roadId = req.params.roadId;
+// /Hakene-A1で、roadデータを返す
+router.get("/:roadId", UserCtrl.authMiddleware, function (req, res) {
+  const roadId = req.params.roadId;
 
-//   //DEBUG
-//   //Road.findById(roadId, UserCtrl.authMiddleware, function (err, foundRoad) {
-//   Road.findById(roadId, function (err, foundRoad) {
-//     if (err) {
-//       return res
-//         .status(422)
-//         .send({ errors: [{ title: "Road error", detail: "Road not found" }] });
-//     }
-//     return res.json(foundRoad);
-//   });
-// });
+  Road.find({ folderId: roadId }, function (err, foundRoad) {
+    if (err) {
+      return res
+        .status(422)
+        .send({ errors: [{ title: "Road error", detail: "Road not found" }] });
+    }
+    return res.json(foundRoad);
+  });
+});
 
-//DEBUG Hakene-A1でHakone−A1フォルダー名のjsonデータを返す
-router.get("/:folderId", UserCtrl.authMiddleware, function (req, res) {
+// /Hakene-A1/jpgファイルで、Exifデータを返す
+router.get("/:folderId/:id", UserCtrl.authMiddleware, function (req, res) {
+  // router.get("/:folderId", UserCtrl.authMiddleware, function (req, res) {
   const folderId = req.params.folderId;
+  const id = req.params.id;
 
-  //DEBUG
   // Exif.findById(folderId, function (err, foundExif) {
   //   if (err) {
   //     return res
@@ -46,7 +44,12 @@ router.get("/:folderId", UserCtrl.authMiddleware, function (req, res) {
   //   return res.json(foundExif);
   // });
 
-  Exif.find({}, function (err, foundExifs) {
+  Exif.find({ FolderName: folderId, FileName: id }, function (err, foundExifs) {
+    if (err) {
+      return res
+        .status(422)
+        .send({ errors: [{ title: "Exif error", detail: "Exif not found" }] });
+    }
     return res.json(foundExifs);
   });
 });
