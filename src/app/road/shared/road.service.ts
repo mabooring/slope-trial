@@ -73,100 +73,6 @@ export class RoadService {
     return of(s3FileList);
   }
 
-  //Observableで記述
-  getImagesInfo(folderName, roadId): Observable<Array<Object>> {
-    var s3FileList = new Array<Object>();
-    var imagePhotosKey = encodeURIComponent(folderName) + '/';
-
-    s3.listObjects({ Prefix: imagePhotosKey }, function (err, data) {
-      if (err) {
-        return alert('There was an error get image data: ' + err.message);
-      }
-      // 'this' references the AWS.Response instance that represents the response
-      var href = this.request.httpRequest.endpoint.href;
-      var bucketUrl = href + BucketName + '/';
-
-      var photos = data.Contents.map(function (photo) {
-        var photoKey = photo.Key;
-        var photoUrl = bucketUrl + encodeURIComponent(photoKey);
-        if (
-          photoKey.indexOf(roadId) != -1 &&
-          (photoKey.indexOf('jpg') != -1 || photoKey.indexOf('jpeg') != -1)
-        ) {
-          var array = photoKey.split('/');
-          photoKey = array[array.length - 1];
-          var imageInfo = { photoKey: photoKey, photoUrl: photoUrl };
-          s3FileList.push(imageInfo);
-        }
-      });
-    });
-    console.log('s3FileList!', s3FileList);
-    return of(s3FileList);
-  }
-
-  //Observableで記述
-  getThumbnailsInfo(folderName): Observable<Array<Object>> {
-    const s3FileList = new Array<Object>();
-    var thumbnailPhotosKey = encodeURIComponent(folderName) + '/';
-    s3.listObjects({ Prefix: thumbnailPhotosKey }, function (err, data) {
-      if (err) {
-        return alert('There was an error get thumbnail data: ' + err.message);
-      }
-      // 'this' references the AWS.Response instance that represents the response
-      var href = this.request.httpRequest.endpoint.href;
-      var bucketUrl = href + BucketName + '/';
-
-      var photos = data.Contents.map(function (photo) {
-        var photoKey = photo.Key;
-        var photoUrl = bucketUrl + encodeURIComponent(photoKey);
-        var thumbnails = { photoKey: photoKey, photoUrl: photoUrl };
-        s3FileList.push(thumbnails);
-      });
-    });
-    console.log(s3FileList);
-    //DEBUG
-    // var thumbnailsList = Object.create(s3FileList);
-    // var thumbnailsInfo = thumbnailsList.filter(
-    //   (item) => item.photoKey.indexOf('Hakone-A1') != -1
-    // );
-    // var imageNameList = thumbnailsInfo.map((item) => item.photoKey);
-    // imageNameList.forEach((data, index) => {
-    //   var array = data.split('/');
-    //   thumbnailsInfo[index].photoKey = array[array.length - 1];
-    // });
-    // console.log('S3 thumnailsInfo', thumbnailsInfo);
-    // return of(thumbnailsInfo);
-    return of(s3FileList);
-  }
-
-  //コールバック関数で記述
-  getThumbnailsList(folderName, callback) {
-    var thumbnailPhotosKey = encodeURIComponent(folderName) + '/';
-    s3.listObjects({ Prefix: thumbnailPhotosKey }, function (err, data) {
-      if (err) {
-        return alert('There was an error get thumbnail data: ' + err.message);
-      }
-      // 'this' references the AWS.Response instance that represents the response
-      var href = this.request.httpRequest.endpoint.href;
-      var bucketUrl = href + BucketName + '/';
-
-      var photos = data.Contents.map(function (photo) {
-        var photoKey = photo.Key;
-        var photoUrl = bucketUrl + encodeURIComponent(photoKey);
-        console.log(photoKey);
-        console.log(photoUrl);
-        var thumbnails = { photoKey: photoKey, phtoUrl: photoUrl };
-        thumbnailsList.push(thumbnails);
-      });
-      callback(err, thumbnailsList);
-      // console.log(thumbnailsList, 'thumbnails loaded');
-      // next: (response) => {
-      //   return thumbnailsList;
-      // };
-    });
-    // return thumbnailsList;
-  }
-
   getRoads(): Observable<any> {
     //return roads;
     return this.http.get('/api/v1/roads');
@@ -176,13 +82,9 @@ export class RoadService {
     // return roads[roadId];
     return this.http.get('/api/v1/roads/' + roadId);
   }
-  // //DEBUG
-  // getExifs(): Observable<any> {
-  //   //return roads;
-  //   return this.http.get('/api/v1/exifs');
-  // }
-  // getExifById(exifId: string): Observable<any> {
-  //   // return roads[roadId];
-  //   return this.http.get('/api/v1/exifs/' + exifId);
-  // }
+
+  getExifById(roadId: string, id: string): Observable<any> {
+    // return roads[roadId];
+    return this.http.get('/api/v1/roads/' + roadId + '/' + id);
+  }
 }
