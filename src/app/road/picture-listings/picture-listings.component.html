@@ -1,7 +1,9 @@
 <div *ngIf="road">
   <div
     class="page-header section-dark"
-    [ngStyle]="{ 'background-image': 'url(' + road.coverimg + ')' }"
+    [ngStyle]="{
+      'background-image': 'url(' + coverPhoto + ')'
+    }"
   >
     <!-- <div class="filter"></div> -->
     <div class="container">
@@ -16,25 +18,30 @@
     </div>
   </div>
 
-  <!-- DEBUG S3 -->
-  <div>
-    <h3>Photo Album Viewer SLOPE</h3>
-    <div id="viewer"></div>
-  </div>
   <!-- <hr class="featurette-divider" /> -->
-
+  <!-- DEBUG S3 -->
   <!-- Thubnails表示 -->
   <div class="container marketing">
     <div class="row featurette">
       <div class="col-md-12">
         <h3 class="featurette-heading">
-          撮影写真サムネイル
+          撮影画像サムネイル(画像クリックで詳細情報)
         </h3>
         <br />
         <button
           type="button"
+          class="btn btn-success"
+          data-toggle="collapse"
+          data-target="#collapseExample"
+          aria-expanded="true"
+          aria-controls="collapseExample"
+        >
+          サムネイル表示/非表示
+        </button>
+        <button
+          type="button"
           id="all-set-button"
-          class="btn btn-outline-primary"
+          class="btn btn-outline-danger"
           (click)="allCheckboxChecked()"
         >
           全て選択
@@ -42,60 +49,60 @@
         <button
           type="button"
           id="all-clear-button"
-          class="btn btn-outline-danger"
+          class="btn btn-outline-primary"
           (click)="allCheckboxUnChecked()"
         >
           全て解除
         </button>
-        <br />
-        <br />
-        <br /><br />
-        <div class="panel-group">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title">
-                <a data-toggle="collapse" href="#collapse1">折りたたみ</a>
-              </h4>
-            </div>
-            <div id="collapse1" class="panel-collapse collapse">
-              <div class="panel-body">内容</div>
-              <div class="panel-footer">フッター</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="grid">
-          <div class="col-sm" *ngFor="let pokemon of pokemons">
-            <div class="card">
-              <img
-                src="assets/pokemons/thumbnails/{{
-                  pokemon.id | number: '3.0'
-                }}.png"
-                class="card-img-top"
-                alt="..."
-                routerLink="{{ pokemon.id }}"
-              />
-              <form class="card-body">
-                <input #checkboxes type="checkbox" name="map-display-flag" />
-                {{ pokemon.name.japanese }}
-              </form>
+        <br /><br />
+
+        <div class="collapseTemp" id="collapseExampleTemp">
+          <div class="grid">
+            <div
+              class="col-sm"
+              *ngFor="let thumbnail of thumbnailsInfo; let i = index"
+            >
+              <div class="card">
+                <img
+                  src="{{ thumbnail.photoUrl }}"
+                  class="card-img-top"
+                  alt="..."
+                  routerLink="{{ thumbnail.photoKey }}"
+                />
+                <form class="card-body">
+                  <input #checkboxes type="checkbox" name="map-display-flag" />
+                  {{ thumbnail.photoKey }}
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <hr class="featurette-divider" />
+    <!-- <hr class="featurette-divider" /> -->
 
     <!-- mapエリア -->
+    <h3 class="featurette-heading">
+      撮影画像マップ
+    </h3>
+    <br />
     <div class="col-md-12">
       <google-map
-        height="500px"
-        width="500px"
+        height="570px"
+        width="760px"
         [center]="center"
         [zoom]="zoom"
         [options]="options"
-      ></google-map>
+      >
+        <map-marker
+          *ngIf="currentPosition"
+          [position]="currentPosition"
+          [options]="currentPositionMarkerOption"
+        >
+        </map-marker>
+      </google-map>
     </div>
 
     <hr class="featurette-divider" />
