@@ -9,6 +9,8 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { LatLngTransService } from '../shared/latlng.service';
+
 // import * as AWS from 'aws-sdk';
 
 @Component({
@@ -18,29 +20,51 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class PictureListComponent implements OnInit {
   road;
-  exif;
-  thumbnailsList;
+  thumbnailsInfo;
+  folderName;
+  coverPhoto = '../../assets/img/cover_proto_mod.jpg';
 
   //　S3
   //DEBUG サムネイル（仮）でローカルのポケモンを表示
   pokemons = POKEMONS;
   @ViewChildren('checkboxes') checkboxes: QueryList<ElementRef>;
 
-  //DEBUG
+  //DEBUG Map
+  // ============================
   zoom = 16;
   // 東新宿駅の座標
-  center: google.maps.LatLngLiteral = {
-    lat: 35.697695,
-    lng: 139.707354,
+  pointData = {
+    lat: { degree: 35, minute: 10, second: 14.750831946755408 },
+    lng: { degree: 139, minute: 4, second: 3.843912007846434 },
   };
+  center: google.maps.LatLngLiteral = this.latLngTransService.degreeMinuteSecond2Degree(
+    this.pointData
+  );
   // 地図のオプション
   options: google.maps.MapOptions = {
     disableDefaultUI: true,
   };
 
+  // 現在位置マーカーの座標
+  // private latLngTransService: LatLngTransService
+  currentPosition: google.maps.LatLngLiteral = this.latLngTransService.degreeMinuteSecond2Degree(
+    this.pointData
+  );
+
+  // 現在位置マーカーのオプション
+  currentPositionMarkerOption: google.maps.MarkerOptions = {
+    // animation: google.maps.Animation.DROP,
+    // icon: {
+    //   url: '../../assets/img/mapicons/blue-dot.png',
+    //   scaledSize: new google.maps.Size(32, 32),
+    // },
+  };
+  // =========================
+
   constructor(
     private route: ActivatedRoute,
-    private roadService: RoadService
+    private roadService: RoadService,
+    private latLngTransService: LatLngTransService
   ) {}
 
   allCheckboxChecked() {
@@ -55,57 +79,30 @@ export class PictureListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.latLngTransService.transToDgree();
+
     this.route.paramMap.subscribe((params) => {
+      this.folderName = params.get('roadId');
       const roadObservable = this.roadService.getRoadById(params.get('roadId'));
       roadObservable.subscribe(
         (data) => {
           this.road = data;
+          console.log('this.road!!', this.road);
         },
         (err) => {
           console.error('次のエラーが発生しました： ' + err);
         }
       );
     });
-
-    // //DEBUG BehaviorSubject
-    // this.thumbnailsSubject = new BehaviorSubject<object[]>([]);
-
-    this.roadService.getThumbnailsInfo('thumbnails').subscribe((obj) => {
-      this.thumbnailsList = obj;
-      console.log('ここ');
-      console.log(this.thumbnailsList);
-      debugger;
-    });
-
-    // this.roadService.getThumbnailsList('thumbnails', function (err, data) {
-    //   if (err) {
-    //     console.log('get thumbnailsList err!');
-    //   }
-    //   if (data) {
-    //   //   // this.thumbnailsList = data;
-    //   //   // console.log(this.thumbnailsList);
-    //     var thumbnailsList = data;
-    //     console.log(data);
-    //   }
-    //   this.thumbnailsSubject.subscribe((data) => {
-    //     this.tumbnailInfo = data;
-    //     console.log(this.tumbnailInfo);
-    //     debugger;
-    //   });
-    // });
-
-    // this.route.paramMap.subscribe((params) => {
-    //   const exifObservable = this.roadService.getExifById(params.get('exifId'));
-    //   exifObservable.subscribe(
-    //     (data) => {
-    //       this.exif = data;
-    //     },
-    //     (err) => {
-    //       console.error('EXIFで次のエラーが発生しました： ' + err);
-    //     }
-    //   );
-    // });
-
-    //DEBUG
+    //DEBUG getInfo from S3
+    this.roadService.getS3Info('thumbnails', this.folderName).subscribe(
+      (obj) => {
+        this.thumbnailsInfo = Object.create(obj);
+        console.log('thumbnailsInfo!', this.thumbnailsInfo);
+      },
+      (err) => {
+        console.error('thumbnailsでエラーが発生しました： ' + err);
+      }
+    );
   }
 }

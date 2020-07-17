@@ -11,6 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 export class PictureDetailComponent implements OnInit {
   pokemons = POKEMONS;
   pokemon;
+  imagesInfo;
+  roadId;
+  id;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,9 +21,22 @@ export class PictureDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((map) => {
-      const id = +map.get('id');
-      this.pokemon = this.pokemons[id - 1];
+    this.route.paramMap.subscribe((params) => {
+      this.roadId = params.get('roadId'); //Hakone-A1
+      this.id = params.get('id'); //P100026.jpg
+
+      // this.pokemon = this.pokemons[id - 1];
+      this.pokemon = this.pokemons[3];
     });
+
+    //DEBUG getInfo from S3
+    this.roadService.getS3Info('images', this.roadId).subscribe(
+      (obj) => {
+        this.imagesInfo = Object.create(obj);
+      },
+      (err) => {
+        console.error('thumbnailsでエラーが発生しました： ' + err);
+      }
+    );
   }
 }

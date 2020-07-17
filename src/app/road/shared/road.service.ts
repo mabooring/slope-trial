@@ -8,8 +8,6 @@ import { nextTick } from 'process';
 // import { AWS_ENV } from '../../../environments/environment';
 
 const AWS = require('aws-sdk');
-// const fs = require('fs');
-// const path = require('path');
 // AWS.config.loadFromPath('./rootkey.json');
 // AWS.config.update({ region: 'ap-northeast-1' });
 //DEBUG Bucket s-trial-app
@@ -41,6 +39,70 @@ export class RoadService {
   //     ACL: 'public-read',
   //   };
   // }
+  //Observableで記述
+  getS3Info(folderName, roadId): Observable<Array<Object>> {
+    console.log('folderName!', folderName);
+    console.log('roadId!', roadId);
+
+    var s3FileList = new Array<Object>();
+    var imagePhotosKey = encodeURIComponent(folderName) + '/';
+
+    s3.listObjects({ Prefix: imagePhotosKey }, function (err, data) {
+      if (err) {
+        return alert('There was an error get image data: ' + err.message);
+      }
+      // 'this' references the AWS.Response instance that represents the response
+      var href = this.request.httpRequest.endpoint.href;
+      var bucketUrl = href + BucketName + '/';
+
+      var photos = data.Contents.map(function (photo) {
+        var photoKey = photo.Key;
+        var photoUrl = bucketUrl + encodeURIComponent(photoKey);
+        if (
+          photoKey.indexOf(roadId) != -1 &&
+          (photoKey.indexOf('jpg') != -1 || photoKey.indexOf('jpeg') != -1)
+        ) {
+          var array = photoKey.split('/');
+          photoKey = array[array.length - 1];
+          var imageInfo = { photoKey: photoKey, photoUrl: photoUrl };
+          s3FileList.push(imageInfo);
+        }
+      });
+    });
+    console.log('s3FileList!', s3FileList);
+    return of(s3FileList);
+  }
+
+  //Observableで記述
+  getImagesInfo(folderName, roadId): Observable<Array<Object>> {
+    var s3FileList = new Array<Object>();
+    var imagePhotosKey = encodeURIComponent(folderName) + '/';
+
+    s3.listObjects({ Prefix: imagePhotosKey }, function (err, data) {
+      if (err) {
+        return alert('There was an error get image data: ' + err.message);
+      }
+      // 'this' references the AWS.Response instance that represents the response
+      var href = this.request.httpRequest.endpoint.href;
+      var bucketUrl = href + BucketName + '/';
+
+      var photos = data.Contents.map(function (photo) {
+        var photoKey = photo.Key;
+        var photoUrl = bucketUrl + encodeURIComponent(photoKey);
+        if (
+          photoKey.indexOf(roadId) != -1 &&
+          (photoKey.indexOf('jpg') != -1 || photoKey.indexOf('jpeg') != -1)
+        ) {
+          var array = photoKey.split('/');
+          photoKey = array[array.length - 1];
+          var imageInfo = { photoKey: photoKey, photoUrl: photoUrl };
+          s3FileList.push(imageInfo);
+        }
+      });
+    });
+    console.log('s3FileList!', s3FileList);
+    return of(s3FileList);
+  }
 
   //Observableで記述
   getThumbnailsInfo(folderName): Observable<Array<Object>> {
@@ -57,19 +119,24 @@ export class RoadService {
       var photos = data.Contents.map(function (photo) {
         var photoKey = photo.Key;
         var photoUrl = bucketUrl + encodeURIComponent(photoKey);
-        console.log(photoKey);
-        console.log(photoUrl);
-        var thumbnails = { photoKey: photoKey, phtoUrl: photoUrl };
+        var thumbnails = { photoKey: photoKey, photoUrl: photoUrl };
         s3FileList.push(thumbnails);
-        // console.log(s3FileList);
       });
-      // console.log(thumbnailsList, 'thumbnails loaded');
-      // next: (response) => {
-      //   return thumbnailsList;
-      // };
     });
     console.log(s3FileList);
-    return Observable(s3FileList);
+    //DEBUG
+    // var thumbnailsList = Object.create(s3FileList);
+    // var thumbnailsInfo = thumbnailsList.filter(
+    //   (item) => item.photoKey.indexOf('Hakone-A1') != -1
+    // );
+    // var imageNameList = thumbnailsInfo.map((item) => item.photoKey);
+    // imageNameList.forEach((data, index) => {
+    //   var array = data.split('/');
+    //   thumbnailsInfo[index].photoKey = array[array.length - 1];
+    // });
+    // console.log('S3 thumnailsInfo', thumbnailsInfo);
+    // return of(thumbnailsInfo);
+    return of(s3FileList);
   }
 
   //コールバック関数で記述

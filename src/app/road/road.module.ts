@@ -1,14 +1,16 @@
-import { PictureDetailComponent } from './picture-detail/picture-detail.component';
-import { AuthGuard } from './../auth/shared/auth.guard';
-import { RoadComponent } from './road.component';
-import { PictureListComponent } from './picture-listings/picture-listings.component';
-import { RoadListComponent } from './road-listings/road-listings.component';
-
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RoadService } from './shared/road.service';
 import { GoogleMapsModule } from '@angular/google-maps';
+
+import { AuthGuard } from './../auth/shared/auth.guard';
+import { RoadComponent } from './road.component';
+import { PictureDetailComponent } from './picture-detail/picture-detail.component';
+import { PictureListComponent } from './picture-listings/picture-listings.component';
+import { RoadListComponent } from './road-listings/road-listings.component';
+
+import { LatLngTransService } from './shared/latlng.service';
+import { RoadService } from './shared/road.service';
 
 const routes: Routes = [
   {
@@ -32,15 +34,13 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+    RoadComponent,
     RoadListComponent,
     PictureListComponent,
-    RoadComponent,
     PictureDetailComponent,
   ],
-  //DEBUG
-  // imports: [RouterModule.forChild(routes), CommonModule],
   imports: [RouterModule.forChild(routes), CommonModule, GoogleMapsModule],
-  providers: [RoadService],
+  providers: [RoadService, LatLngTransService],
   bootstrap: [],
 })
 export class RoadModule {}
