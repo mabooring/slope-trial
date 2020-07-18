@@ -15,34 +15,70 @@ router.get("", function (req, res) {
   });
 });
 
-// /Hakene-A1で、roadデータを返す
-router.get("/:roadId", UserCtrl.authMiddleware, function (req, res) {
-  const roadId = req.params.roadId;
+//DEBUG
+// /Hakene-A1で、Exifのリストデータを返す
+router.get("/:folderId", UserCtrl.authMiddleware, function (req, res) {
+  // router.get("/:folderId", UserCtrl.authMiddleware, function (req, res) {
+  const folderId = req.params.folderId;
 
-  Road.find({ folderId: roadId }, function (err, foundRoad) {
+  // Exif.find({ FolderName: folderId }, function (err, foundExifs) {
+  Exif.find({ FolderName: folderId }, function (err, foundExifs) {
     if (err) {
       return res
         .status(422)
-        .send({ errors: [{ title: "Road error", detail: "Road not found" }] });
+        .send({ errors: [{ title: "Exif error", detail: "Exif not found" }] });
     }
-    return res.json(foundRoad);
+    return res.json(foundExifs);
   });
 });
+
+// // /Hakene-A1で、roadデータを返す
+// router.get("/:roadId", UserCtrl.authMiddleware, function (req, res) {
+//   const roadId = req.params.roadId;
+
+//   Road.find({ folderId: roadId }, function (err, foundRoad) {
+//     if (err) {
+//       return res
+//         .status(422)
+//         .send({ errors: [{ title: "Road error", detail: "Road not found" }] });
+//     }
+//     return res.json(foundRoad);
+//   });
+// });
+
+//DEBUG /Hakene-A1で、roadデータを返す
+// router.get("/:roadId", UserCtrl.authMiddleware, function (req, res) {
+//   const roadId = req.params.roadId;
+
+//   var roadData;
+//   var exifData;
+
+//   //Roadデータ
+//   Road.find({ folderId: roadId }, function (err, foundRoad) {
+//     if (err) {
+//       return res
+//         .status(422)
+//         .send({ errors: [{ title: "Road error", detail: "Road not found" }] });
+//     }
+//     roadData = res.json(foundRoad);
+//   });
+//   //ExifData
+//   Exif.find({ FolderName: roadId }, function (err, foundExifs) {
+//     if (err) {
+//       return res
+//         .status(422)
+//         .send({ errors: [{ title: "Exif error", detail: "Exif not found" }] });
+//     }
+//     exifData = res.json(foundExifs);
+//   });
+//   return exifData;
+// });
 
 // /Hakene-A1/jpgファイルで、Exifデータを返す
 router.get("/:folderId/:id", UserCtrl.authMiddleware, function (req, res) {
   // router.get("/:folderId", UserCtrl.authMiddleware, function (req, res) {
   const folderId = req.params.folderId;
   const id = req.params.id;
-
-  // Exif.findById(folderId, function (err, foundExif) {
-  //   if (err) {
-  //     return res
-  //       .status(422)
-  //       .send({ errors: [{ title: "Exif error", detail: "Exif not found" }] });
-  //   }
-  //   return res.json(foundExif);
-  // });
 
   Exif.find({ FolderName: folderId, FileName: id }, function (err, foundExifs) {
     if (err) {

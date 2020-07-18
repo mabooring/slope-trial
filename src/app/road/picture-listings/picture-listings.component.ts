@@ -1,4 +1,4 @@
-import { POKEMONS } from '../pokemon/pokemons';
+// import { POKEMONS } from '../pokemon/pokemons';
 import { RoadService } from '../shared/road.service';
 import {
   Component,
@@ -20,13 +20,15 @@ import { LatLngTransService } from '../shared/latlng.service';
 })
 export class PictureListComponent implements OnInit {
   road;
+  // roads;
   thumbnailsInfo;
   folderName;
   coverPhoto = '../../assets/img/cover_proto_mod.jpg';
+  exifList;
 
   //　S3
   //DEBUG サムネイル（仮）でローカルのポケモンを表示
-  pokemons = POKEMONS;
+  // pokemons = POKEMONS;
   @ViewChildren('checkboxes') checkboxes: QueryList<ElementRef>;
 
   //DEBUG Map
@@ -79,23 +81,49 @@ export class PictureListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.latLngTransService.transToDgree();
-
     this.route.paramMap.subscribe((params) => {
       this.folderName = params.get('roadId');
-      const roadObservable = this.roadService.getRoadById(params.get('roadId'));
-      roadObservable.subscribe(
+    });
+
+    //localStrageのroadsデータからroadを取得
+    var roads = JSON.parse(localStorage.getItem('roads-data'));
+    this.road = roads.find((v) => v.folderId === this.folderName);
+
+    // //DEBUG Road情報表示
+    // this.route.paramMap.subscribe((params) => {
+    //   this.folderName = params.get('roadId');
+    //   const roadObservable = this.roadService.getRoadById(params.get('roadId'));
+    //   roadObservable.subscribe(
+    //     (data) => {
+    //       this.road = data[0];
+    //       console.log('this.road!!', this.road);
+    //       // console.log('road.area!!', this.road.area);
+    //     },
+    //     (err) => {
+    //       console.error('次のエラーが発生しました： ' + err);
+    //     }
+    //   );
+    // });
+
+    //DEBUG Exif情報
+    this.route.paramMap.subscribe((params) => {
+      const exifObservable = this.roadService.getExifListById(
+        params.get('roadId')
+      );
+      exifObservable.subscribe(
         (data) => {
-          this.road = data[0];
-          console.log('this.road!!', this.road);
-          console.log('road.area!!', this.road.area);
+          // this.exif = JSON.stringify(Object.create(data)[0]);
+          this.exifList = Object.create(data);
+          console.log('this.exifList!', this.exifList);
         },
         (err) => {
           console.error('次のエラーが発生しました： ' + err);
         }
       );
     });
+
     //DEBUG getInfo from S3
+
     this.roadService.getS3Info('thumbnails', this.folderName).subscribe(
       (obj) => {
         this.thumbnailsInfo = Object.create(obj);
