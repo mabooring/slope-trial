@@ -1,4 +1,4 @@
-import { POKEMONS } from '../pokemon/pokemons';
+// import { POKEMONS } from '../pokemon/pokemons';
 import { RoadService } from '../shared/road.service';
 import {
   Component,
@@ -25,6 +25,7 @@ import { ExecFileOptions } from 'child_process';
 })
 export class PictureListComponent implements OnInit {
   road;
+
   folderName;
   coverPhoto = '../../assets/img/cover_proto_mod.jpg';
   thumbnailsInfo;
@@ -32,6 +33,7 @@ export class PictureListComponent implements OnInit {
 
   form: FormGroup;
   markerList = new Array<Object>();
+
 
   //DEBUG サムネイル（仮）でローカルのポケモンを表示
   // pokemons = POKEMONS;
@@ -153,9 +155,36 @@ export class PictureListComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.folderName = params.get('roadId');
-      const roadObservable = this.roadService.getRoadById(params.get('roadId'));
-      roadObservable.subscribe(
+    });
+
+    //localStrageのroadsデータからroadを取得
+    var roads = JSON.parse(localStorage.getItem('roads-data'));
+    this.road = roads.find((v) => v.folderId === this.folderName);
+
+    // //DEBUG Road情報表示
+    // this.route.paramMap.subscribe((params) => {
+    //   this.folderName = params.get('roadId');
+    //   const roadObservable = this.roadService.getRoadById(params.get('roadId'));
+    //   roadObservable.subscribe(
+    //     (data) => {
+    //       this.road = data[0];
+    //       console.log('this.road!!', this.road);
+    //       // console.log('road.area!!', this.road.area);
+    //     },
+    //     (err) => {
+    //       console.error('次のエラーが発生しました： ' + err);
+    //     }
+    //   );
+    // });
+
+    //DEBUG Exif情報
+    this.route.paramMap.subscribe((params) => {
+      const exifObservable = this.roadService.getExifListById(
+        params.get('roadId')
+      );
+      exifObservable.subscribe(
         (data) => {
+
           this.road = data[0];
           console.log('this.road!', this.road);
         },
@@ -174,6 +203,7 @@ export class PictureListComponent implements OnInit {
         (data) => {
           this.roadExifs = data;
           console.log('road exifs!', this.roadExifs);
+
         },
         (err) => {
           console.error('次のエラーが発生しました： ' + err);
@@ -181,7 +211,9 @@ export class PictureListComponent implements OnInit {
       );
     });
 
+
     //getInfo from S3
+
     this.roadService.getS3Info('thumbnails', this.folderName).subscribe(
       (obj) => {
         this.thumbnailsInfo = Object.create(obj);

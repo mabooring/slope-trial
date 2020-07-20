@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 //import { roads } from './../../roads';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -41,8 +42,10 @@ export class RoadService {
   // }
   //Observableで記述
   getS3Info(folderName, roadId): Observable<Array<Object>> {
+
     // console.log('folderName!', folderName);
     // console.log('roadId!', roadId);
+
 
     var s3FileList = new Array<Object>();
     var imagePhotosKey = encodeURIComponent(folderName) + '/';
@@ -78,13 +81,16 @@ export class RoadService {
     return this.http.get('/api/v1/roads');
   }
 
-  getRoadById(roadId: string): Observable<any> {
-    // return roads[roadId];
+  // getRoadById(roadId: string): Observable<any> {
+  //   // return roads[roadId];
+  //   return this.http.get('/api/v1/roads/' + roadId);
+  // }
+
+  getExifListById(roadId: string): Observable<any> {
     return this.http.get('/api/v1/roads/' + roadId);
   }
 
   getExifById(roadId: string, id: string): Observable<any> {
-    // return roads[roadId];
     return this.http.get('/api/v1/roads/' + roadId + '/' + id);
   }
   //DEBUG

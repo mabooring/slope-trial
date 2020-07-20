@@ -26,6 +26,8 @@ export class RoadListComponent implements OnInit {
     const roadsObservable = this.RoadService.getRoads();
     roadsObservable.subscribe(
       (data) => {
+        localStorage.setItem('roads-data', JSON.stringify(data));
+        // localStorage.setItem('roads-data', data);
         this.roads = data;
         this.setFormattedDate(this.roads);
       },
