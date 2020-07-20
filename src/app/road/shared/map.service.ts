@@ -51,15 +51,21 @@ export class mapService {
   getMarkerLocation(fileName, roadExifs) {
     // console.log('fileNmae!!!', fileName);
     // console.log('roadExifs!!!', roadExifs);
-
+    console.log('loadExifs Length!', roadExifs.length);
     var jsonRoadExifs = JSON.stringify(roadExifs);
     var parsedRoadExifs = JSON.parse(jsonRoadExifs);
-    var matchLocation = parsedRoadExifs.filter(function (item, index) {
-      if (item.FileName == fileName) {
-        // console.log('Json Matched!!!');
-        return true;
-      }
-    });
+    var matchLocation;
+    if (roadExifs.length == 1) {
+      matchLocation = parsedRoadExifs;
+    } else {
+      var matchLocation = parsedRoadExifs.filter(function (item, index) {
+        if (item.FileName == fileName) {
+          // console.log('Json Matched!!!');
+          return true;
+        }
+      });
+    }
+
     var location: PointInDMS = {
       lat: {
         degree: matchLocation[0].gps.GPSLatitude[0],
