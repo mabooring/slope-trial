@@ -41,8 +41,8 @@ export class RoadService {
   // }
   //Observableで記述
   getS3Info(folderName, roadId): Observable<Array<Object>> {
-    console.log('folderName!', folderName);
-    console.log('roadId!', roadId);
+    // console.log('folderName!', folderName);
+    // console.log('roadId!', roadId);
 
     var s3FileList = new Array<Object>();
     var imagePhotosKey = encodeURIComponent(folderName) + '/';
@@ -69,7 +69,7 @@ export class RoadService {
         }
       });
     });
-    console.log('s3FileList!', s3FileList);
+    // console.log('s3FileList!', s3FileList);
     return of(s3FileList);
   }
 
@@ -86,5 +86,12 @@ export class RoadService {
   getExifById(roadId: string, id: string): Observable<any> {
     // return roads[roadId];
     return this.http.get('/api/v1/roads/' + roadId + '/' + id);
+  }
+  //DEBUG
+  getroadExifsById(roadId: string): Observable<any> {
+    // return roads[roadId];
+    return this.http.get(
+      '/api/v1/roads/' + roadId + '/' + 'roadExifs' + '/' + 'gps'
+    );
   }
 }

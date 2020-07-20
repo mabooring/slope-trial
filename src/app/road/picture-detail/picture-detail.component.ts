@@ -38,7 +38,7 @@ export class PictureDetailComponent implements OnInit {
           this.exif = Object.create(data)[0];
           this.photoDate = this.exif.exif.DateTimeOriginal;
           this.photoModifyDate = this.exif.image.ModifyDate;
-          console.log('this.exif!!', this.exif);
+          console.log('this.exif!', this.exif);
         },
         (err) => {
           console.error('次のエラーが発生しました： ' + err);

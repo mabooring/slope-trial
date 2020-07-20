@@ -31,20 +31,28 @@ router.get("/:roadId", UserCtrl.authMiddleware, function (req, res) {
 
 // /Hakene-A1/jpgファイルで、Exifデータを返す
 router.get("/:folderId/:id", UserCtrl.authMiddleware, function (req, res) {
-  // router.get("/:folderId", UserCtrl.authMiddleware, function (req, res) {
   const folderId = req.params.folderId;
   const id = req.params.id;
 
-  // Exif.findById(folderId, function (err, foundExif) {
-  //   if (err) {
-  //     return res
-  //       .status(422)
-  //       .send({ errors: [{ title: "Exif error", detail: "Exif not found" }] });
-  //   }
-  //   return res.json(foundExif);
-  // });
-
   Exif.find({ FolderName: folderId, FileName: id }, function (err, foundExifs) {
+    if (err) {
+      return res
+        .status(422)
+        .send({ errors: [{ title: "Exif error", detail: "Exif not found" }] });
+    }
+    return res.json(foundExifs);
+  });
+});
+
+// /Hakene-A1ファイルで、Exifデータを返す
+router.get("/:folderId/roadExifs/gps", UserCtrl.authMiddleware, function (
+  req,
+  res
+) {
+  const folderId = req.params.folderId;
+
+  // Exif.find({ FolderName: folderId }, function (err, foundExifs) {
+  Exif.find({ FolderName: folderId }, function (err, foundExifs) {
     if (err) {
       return res
         .status(422)

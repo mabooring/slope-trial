@@ -70,8 +70,28 @@
                   alt="..."
                   routerLink="{{ thumbnail.photoKey }}"
                 />
-                <form class="card-body">
-                  <input #checkboxes type="checkbox" name="map-display-flag" />
+                <form
+                  #myForm="ngForm"
+                  class="card-body"
+                  (ngSubmit)="showMakerListToMap()"
+                >
+                  <!-- <input
+                    #checkboxes
+                    type="checkbox"
+                    name="marker{{ i }}"
+                    id="marker{{ i }}"
+                    [(ngModel)]="markerList[i].selected"
+                    [value]="thumbnail.photoKey"
+                    (change)="onCheckboxChange($event)"
+                  /> -->
+                  <input
+                    #checkboxes
+                    type="checkbox"
+                    name="marker{{ i }}"
+                    id="marker{{ i }}"
+                    [value]="thumbnail.photoKey"
+                    (change)="onCheckboxChange($event)"
+                  />
                   {{ thumbnail.photoKey }}
                 </form>
               </div>
@@ -92,16 +112,16 @@
       <google-map
         height="570px"
         width="760px"
-        [center]="center"
-        [zoom]="zoom"
-        [options]="options"
+        [center]="map_center"
+        [zoom]="map_zoom"
+        [options]="map_options"
       >
-        <map-marker
-          *ngIf="currentPosition"
-          [position]="currentPosition"
-          [options]="currentPositionMarkerOption"
-        >
-        </map-marker>
+        <div *ngIf="markerList">
+          <div *ngFor="let marker of markerList; let i = index">
+            <map-marker [options]="marker_options" [position]="marker.location">
+            </map-marker>
+          </div>
+        </div>
       </google-map>
     </div>
 
