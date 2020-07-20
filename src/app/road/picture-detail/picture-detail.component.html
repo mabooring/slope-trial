@@ -21,11 +21,13 @@
             </tr>
             <tr>
               <td>撮影日</td>
-              <td>{{ photoDate | date: "yyyy/MM/dd" }}</td>
+
+              <td>{{ photoDate | date: "yyyy-MM-dd" }}</td>
             </tr>
             <tr>
               <td>画像加工日</td>
-              <td>{{ photoModifyDate | date: "yyyy/MM/dd" }}</td>
+              <td>{{ photoModifyDate | date: "yyyy-MM-dd" }}</td>
+
             </tr>
             <tr>
               <td>Orientation</td>
@@ -53,7 +55,7 @@
               <td>
                 ISO：{{
                   exif.exif.ISO
-                }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最小F値：{{
+                }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;レンズ最小F値：{{
                   exif.exif.MaxApertureValue
                 }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WB：{{
                   exif.exif.WhiteBalance
