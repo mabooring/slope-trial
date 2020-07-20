@@ -4,96 +4,127 @@
       <img src="./assets/img/daniel-olahh_mod.jpg" width="100%" />
     </div>
 
-    <div class="col-sm" *ngFor="let imageInfo of imagesInfo" class="pokemon">
-      <div class="card">
-        <img src="{{ imageInfo.photoUrl }}" class="card-img-top" alt="..." />
-        <div class="card-body">
-          <!-- DEBUG -->
-          <!-- <p>{{ pokemon.type | type }}</p> -->
-          <table class="table table-sm">
-            <tr>
-              <th>{{ exif.FileName }}</th>
-              <th></th>
-            </tr>
-            <tr>
-              <td>撮影装置</td>
-              <td>{{ exif.image.Make }}：{{ exif.image.Model }}</td>
-            </tr>
-            <tr>
-              <td>撮影日</td>
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-sm-8"
+          *ngFor="let imageInfo of imagesInfo"
+          class="pokemon"
+        >
+          <h3 class="featurette-heading">
+            詳細画像情報
+          </h3>
+          <div class="card">
+            <img
+              src="{{ imageInfo.photoUrl }}"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <!-- DEBUG -->
+              <!-- <p>{{ pokemon.type | type }}</p> -->
+              <table class="table table-sm">
+                <tr>
+                  <th>{{ exif.FileName }}</th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td>撮影装置</td>
+                  <td>{{ exif.image.Make }}：{{ exif.image.Model }}</td>
+                </tr>
+                <tr>
+                  <td>撮影日</td>
 
-              <td>{{ photoDate | date: "yyyy-MM-dd" }}</td>
-            </tr>
-            <tr>
-              <td>画像加工日</td>
-              <td>{{ photoModifyDate | date: "yyyy-MM-dd" }}</td>
+                  <td>{{ photoDate | date: "yyyy-MM-dd" }}</td>
+                </tr>
+                <tr>
+                  <td>画像加工日</td>
+                  <td>{{ photoModifyDate | date: "yyyy-MM-dd" }}</td>
+                </tr>
+                <tr>
+                  <td>Orientation</td>
+                  <td>{{ exif.image.Orientation }}</td>
+                </tr>
+                <tr>
+                  <td>XY解像度</td>
+                  <td>
+                    X：{{ exif.image.XResolution }} Y：{{
+                      exif.image.YResolution
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>撮影条件</td>
+                  <td>
+                    デジタルズーム比：{{
+                      exif.exif.DigitalZoomRatio
+                    }}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 露光時間：{{
+                      exif.exif.ExposureTime
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    ISO：{{
+                      exif.exif.ISO
+                    }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;レンズ最小F値：{{
+                      exif.exif.MaxApertureValue
+                    }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WB：{{
+                      exif.exif.WhiteBalance
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>緯度経度</td>
+                  <td>
+                    緯度：{{ exif.gps.GPSLatitudeRef }}&nbsp;&nbsp;{{
+                      exif.gps.GPSLatitude[0]
+                    }}
+                    &nbsp;&nbsp;{{ exif.gps.GPSLatitude[1] }} &nbsp;&nbsp;{{
+                      exif.gps.GPSLatitude[2]
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    経度：{{ exif.gps.GPSLongitudeRef }}&nbsp;&nbsp;{{
+                      exif.gps.GPSLongitude[0]
+                    }}
+                    &nbsp;&nbsp;{{ exif.gps.GPSLongitude[1] }} &nbsp;&nbsp;{{
+                      exif.gps.GPSLongitude[2]
+                    }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
 
-            </tr>
-            <tr>
-              <td>Orientation</td>
-              <td>{{ exif.image.Orientation }}</td>
-            </tr>
-            <tr>
-              <td>XY解像度</td>
-              <td>
-                X：{{ exif.image.XResolution }} Y：{{ exif.image.YResolution }}
-              </td>
-            </tr>
-            <tr>
-              <td>撮影条件</td>
-              <td>
-                デジタルズーム比：{{
-                  exif.exif.DigitalZoomRatio
-                }}
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 露光時間：{{
-                  exif.exif.ExposureTime
-                }}
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>
-                ISO：{{
-                  exif.exif.ISO
-                }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;レンズ最小F値：{{
-                  exif.exif.MaxApertureValue
-                }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WB：{{
-                  exif.exif.WhiteBalance
-                }}
-              </td>
-            </tr>
-            <tr>
-              <td>緯度経度</td>
-              <td>
-                緯度：{{ exif.gps.GPSLatitudeRef }}&nbsp;&nbsp;{{
-                  exif.gps.GPSLatitude[0]
-                }}
-                &nbsp;&nbsp;{{ exif.gps.GPSLatitude[1] }} &nbsp;&nbsp;{{
-                  exif.gps.GPSLatitude[2]
-                }}
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>
-                経度：{{ exif.gps.GPSLongitudeRef }}&nbsp;&nbsp;{{
-                  exif.gps.GPSLongitude[0]
-                }}
-                &nbsp;&nbsp;{{ exif.gps.GPSLongitude[1] }} &nbsp;&nbsp;{{
-                  exif.gps.GPSLongitude[2]
-                }}
-              </td>
-            </tr>
-            <!-- <li class="list-group-item">撮影装置</li>
-            <li class="list-group-item">撮影日</li>
-            <li class="list-group-item">加工日</li>
-            <li class="list-group-item">Orientation</li>
-            <li class="list-group-item">XY解像度</li>
-            <li class="list-group-item">
-              撮影条件：デジタルズーム比、露光時間、ISO、レンズ最小F値、ホワイトバランス
-            </li>
-            <li class="list-group-item">GPS緯度経度：緯度：、経度：</li> -->
-          </table>
+        <div class="col-sm-4">
+          <br /><br /><br /><br /><br />
+          <h3 class="featurette-heading">
+            撮影画像マップ
+          </h3>
+          <google-map
+            height="300px"
+            width="400px"
+            [center]="map_center"
+            [zoom]="map_zoom"
+            [options]="map_options"
+          >
+            <div *ngIf="markerList">
+              <div *ngFor="let marker of markerList; let i = index">
+                <map-marker
+                  [options]="marker_options"
+                  [position]="marker.location"
+                >
+                </map-marker>
+              </div>
+            </div>
+          </google-map>
         </div>
       </div>
     </div>

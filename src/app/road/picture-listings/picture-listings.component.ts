@@ -32,19 +32,13 @@ export class PictureListComponent implements OnInit {
   roadExifs;
 
   form: FormGroup;
-  markerList = new Array<Object>();
-
 
   //DEBUG サムネイル（仮）でローカルのポケモンを表示
   // pokemons = POKEMONS;
   @ViewChildren('checkboxes') checkboxes: QueryList<ElementRef>;
 
-  //DEBUG Map
-  // ============================
-  //map
-  map_zoom = 16;
-  // 東新宿駅の座標
-
+  // =========================
+  //Map
   //東京新宿の座標
   // tokyoPostion: google.maps.LatLngLiteral = {
   //   lat: 35.697695,
@@ -55,18 +49,13 @@ export class PictureListComponent implements OnInit {
     lat: 35.452617,
     lng: 139.390868,
   };
-
+  map_zoom = 16;
   map_center: google.maps.LatLngLiteral = this.ebinaPosition;
-
-  // 地図のオプション
   map_options: google.maps.MapOptions = {
     disableDefaultUI: false,
   };
-
-  //marker
-  // position: google.maps.LatLngLiteral = this.mapService.degreeMinuteSecond2Degree(
-  //   this.pointData
-  // );
+  //Marker
+  markerList = new Array<Object>();
   marker_options: google.maps.MarkerOptions = {
     // animation: google.maps.Animation.DROP,
     // icon: {
@@ -184,7 +173,6 @@ export class PictureListComponent implements OnInit {
       );
       exifObservable.subscribe(
         (data) => {
-
           this.road = data[0];
           console.log('this.road!', this.road);
         },
@@ -203,14 +191,12 @@ export class PictureListComponent implements OnInit {
         (data) => {
           this.roadExifs = data;
           console.log('road exifs!', this.roadExifs);
-
         },
         (err) => {
           console.error('次のエラーが発生しました： ' + err);
         }
       );
     });
-
 
     //getInfo from S3
 
