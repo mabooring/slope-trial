@@ -106,18 +106,10 @@ export class PictureDetailComponent implements OnInit {
       );
 
       // this.pokemon = this.pokemons[id - 1];
-      this.pokemon = this.pokemons[3];
+      // this.pokemon = this.pokemons[3];
     });
 
-    //DEBUG getInfo from S3
-    // this.roadService.getS3Info('images', this.roadId).subscribe(
-    //   (obj) => {
-    //     this.imagesInfo = Object.create(obj);
-    //   },
-    //   (err) => {
-    //     console.error('imagesでエラーが発生しました： ' + err);
-    //   }
-    // );
+    //getInfo from S3
     this.route.paramMap.subscribe((params) => {
       this.roadService.getS3Info('images', params.get('id')).subscribe(
         (obj) => {

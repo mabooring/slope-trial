@@ -6,15 +6,25 @@ const sharp = require("sharp");
 const exif = require("exif-reader");
 const ExifModel = require("./exif-model");
 
+/*################################
+  exifファイル生成
+  使い方：
+  >node exif-generator.js
+################################*/
+
 var exifModel = new ExifModel();
-// フォルダーのファイルリストを取得
-const folderPath = "/Volumes/SSD256/DATA/S3_Upload_Data/images/Hakone-A1";
+// 親フォルダーからのファイルリストを取得
+// const folderPath = "/Volumes/SSD256/DATA/S3_Upload_Data/images";
+const folderPath =
+  "/Volumes/SSD256/DATA/download/s-trial-test-images/images/Hakone-A1";
 // フォルダー名を取得
 const pathPart = folderPath.split("/");
 const folderName = pathPart[pathPart.length - 1];
 
+// const jpegFiles = exifModel.getAllFilesFromFolder(folderPath);
 const jpegFiles = exifModel.getFilesFromFolder(folderPath);
 
+//出力ファイル名
 const outFileName = "jsonresults" + "/" + folderName + ".json";
 fs.unlink(outFileName, (err) => {});
 console.log(outFileName);
@@ -85,9 +95,3 @@ async function genExifContent() {
       });
   });
 }
-
-// genExifHeader().then(function () {
-//   genExifContent().then(function () {
-//     genExifFooter();
-//   });
-// });
