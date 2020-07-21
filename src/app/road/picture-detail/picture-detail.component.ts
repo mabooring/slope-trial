@@ -68,7 +68,7 @@ export class PictureDetailComponent implements OnInit {
           this.exif = Object.create(data)[0];
           this.photoDate = this.exif.exif.DateTimeOriginal;
           this.photoModifyDate = this.exif.image.ModifyDate;
-          console.log('this.exif!', this.exif);
+          // console.log('this.exif!', this.exif);
           //DEBUG map
           var fileName = this.exif.FileName;
 
@@ -114,7 +114,7 @@ export class PictureDetailComponent implements OnInit {
       this.roadService.getS3Info('images', params.get('id')).subscribe(
         (obj) => {
           this.imagesInfo = Object.create(obj);
-          console.log('Image Info!', this.imagesInfo);
+          // console.log('Image Info!', this.imagesInfo);
         },
         (err) => {
           console.error('imagesでエラーが発生しました： ' + err);

@@ -42,16 +42,16 @@ export class mapService {
       lat: { degree: 35, minute: 10, second: 14.750831946755408 },
       lng: { degree: 139, minute: 4, second: 3.843912007846434 },
     };
-    console.log({ tokyoPoint });
+    // console.log({ tokyoPoint });
 
     const deg: PointInDegree = this.degreeMinuteSecond2Degree(tokyoPoint);
-    console.log({ deg });
+    // console.log({ deg });
   }
 
   getMarkerLocation(fileName, roadExifs) {
     // console.log('fileNmae!!!', fileName);
     // console.log('roadExifs!!!', roadExifs);
-    console.log('loadExifs Length!', roadExifs.length);
+    // console.log('loadExifs Length!', roadExifs.length);
     var jsonRoadExifs = JSON.stringify(roadExifs);
     var parsedRoadExifs = JSON.parse(jsonRoadExifs);
     var matchLocation;
@@ -97,7 +97,7 @@ export class mapService {
 
   getMapCenter(markerList, defaultPosition) {
     // console.log('fileNmae!!!', fileName);
-    console.log('markerList!!!', markerList);
+    // console.log('markerList!!!', markerList);
     //. 比較関数
     function compare(a, b) {
       var r = 0;
@@ -116,16 +116,16 @@ export class mapService {
       var parsedMarkerList = JSON.parse(jsonMarkerList);
       var sortedLocation = parsedMarkerList.sort(compare);
       var center_index = Math.floor(sortedLocation.length / 2);
-      console.log('center_index!', center_index);
-      console.log(
-        'markerList[center_index].location!',
-        markerList[center_index].location
-      );
+      // console.log('center_index!', center_index);
+      // console.log(
+      //   'markerList[center_index].location!',
+      //   markerList[center_index].location
+      // );
       center_position = markerList[center_index].location;
     } else {
       center_position = defaultPosition;
     }
-    console.log('center_position!', center_position);
+    // console.log('center_position!', center_position);
     return center_position;
     // return default_postion;
   }

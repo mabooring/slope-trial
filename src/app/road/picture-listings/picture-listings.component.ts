@@ -95,7 +95,7 @@ export class PictureListComponent implements OnInit {
         this.ebinaPosition
       );
     } else {
-      console.log('unchecked!');
+      // console.log('unchecked!');
       for (let i = 0; i < this.markerList.length; i++) {
         if (this.markerList[i]['photoKey'] === fileName) {
           this.markerList.splice(i, 1); //要素を１つ削除
@@ -106,7 +106,7 @@ export class PictureListComponent implements OnInit {
         this.ebinaPosition
       );
     }
-    console.log('markerList!!', this.markerList);
+    // console.log('markerList!!', this.markerList);
   }
 
   showMakerListToMap() {
@@ -114,7 +114,7 @@ export class PictureListComponent implements OnInit {
   }
 
   allCheckboxChecked() {
-    console.log('All Checked!!');
+    // console.log('All Checked!!');
     this.checkboxes.forEach((element) => {
       element.nativeElement.checked = true;
     });
@@ -134,15 +134,15 @@ export class PictureListComponent implements OnInit {
         this.ebinaPosition
       );
     }
-    console.log('markerList!!', this.markerList);
+    // console.log('markerList!!', this.markerList);
   }
   allCheckboxUnChecked() {
-    console.log('All UnChecked!!');
+    // console.log('All UnChecked!!');
     this.checkboxes.forEach((element) => {
       element.nativeElement.checked = false;
     });
     this.markerList.splice(0, this.markerList.length); //全要素を削除
-    console.log('markerList!!', this.markerList);
+    // console.log('markerList!!', this.markerList);
   }
 
   ngOnInit(): void {
@@ -153,7 +153,7 @@ export class PictureListComponent implements OnInit {
     //localStrageのroadsデータからroadを取得
     var roads = JSON.parse(localStorage.getItem('roads-data'));
     this.road = roads.find((v) => v.folderId === this.folderName);
-    console.log('this.road!', this.road);
+    // console.log('this.road!', this.road);
 
     // //DEBUG Road情報表示
     // this.route.paramMap.subscribe((params) => {
@@ -195,7 +195,7 @@ export class PictureListComponent implements OnInit {
       exifsObservable.subscribe(
         (data) => {
           this.roadExifs = data;
-          console.log('road exifs!', this.roadExifs);
+          // console.log('road exifs!', this.roadExifs);
         },
         (err) => {
           console.error('次のエラーが発生しました： ' + err);
@@ -208,7 +208,7 @@ export class PictureListComponent implements OnInit {
     this.roadService.getS3Info('thumbnails', this.folderName).subscribe(
       (obj) => {
         this.thumbnailsInfo = Object.create(obj);
-        console.log('thumbnailsInfo!', this.thumbnailsInfo);
+        // console.log('thumbnailsInfo!', this.thumbnailsInfo);
       },
       (err) => {
         console.error('thumbnailsでエラーが発生しました： ' + err);

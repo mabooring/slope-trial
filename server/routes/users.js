@@ -72,8 +72,6 @@ router.post("/register", function (req, res) {
   }
 
   User.findOne({ email }, function (err, foundUser) {
-    debugger;
-
     if (err) {
       return res.status(422).send({
         errors: [{ title: "User error", detail: "Something went wrong!" }],

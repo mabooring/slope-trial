@@ -15,7 +15,6 @@ router.get("", function (req, res) {
   });
 });
 
-//DEBUG
 // /Hakene-A1で、Exifのリストデータを返す
 router.get("/:folderId", UserCtrl.authMiddleware, function (req, res) {
   // router.get("/:folderId", UserCtrl.authMiddleware, function (req, res) {
