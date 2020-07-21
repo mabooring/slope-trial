@@ -22,7 +22,7 @@ mongoose
       const fakeDb = new FakeDb();
       const exifDb = new ExifDb();
       //開発環境で必要なときのみコメントを外して初期化を行う
-      //fakeDb.initDb();
+      // fakeDb.initDb();
       // exifDb.initDb();
     }
   });

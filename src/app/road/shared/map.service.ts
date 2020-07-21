@@ -66,18 +66,29 @@ export class mapService {
       });
     }
 
-    var location: PointInDMS = {
-      lat: {
-        degree: matchLocation[0].gps.GPSLatitude[0],
-        minute: matchLocation[0].gps.GPSLatitude[1],
-        second: matchLocation[0].gps.GPSLatitude[2],
-      },
-      lng: {
-        degree: matchLocation[0].gps.GPSLongitude[0],
-        minute: matchLocation[0].gps.GPSLongitude[1],
-        second: matchLocation[0].gps.GPSLongitude[2],
-      },
-    };
+    var location: PointInDMS;
+    if (matchLocation[0].gps.GPSLatitude[0] != null) {
+      location = {
+        lat: {
+          degree: matchLocation[0].gps.GPSLatitude[0],
+          minute: matchLocation[0].gps.GPSLatitude[1],
+          second: matchLocation[0].gps.GPSLatitude[2],
+        },
+        lng: {
+          degree: matchLocation[0].gps.GPSLongitude[0],
+          minute: matchLocation[0].gps.GPSLongitude[1],
+          second: matchLocation[0].gps.GPSLongitude[2],
+        },
+      };
+    } else {
+      // 東京
+      const tokyoPoint: PointInDMS = {
+        lat: { degree: 35, minute: 10, second: 14.750831946755408 },
+        lng: { degree: 139, minute: 4, second: 3.843912007846434 },
+      };
+      location = tokyoPoint;
+    }
+
     // console.log('Location!!!', location);
     const deg: PointInDegree = this.degreeMinuteSecond2Degree(location);
     // console.log('Degree!!!', deg);

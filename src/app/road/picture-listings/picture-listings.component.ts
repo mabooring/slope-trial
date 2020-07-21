@@ -129,6 +129,10 @@ export class PictureListComponent implements OnInit {
         location: latlng,
       };
       this.markerList.push(marker);
+      this.map_center = this.mapService.getMapCenter(
+        this.markerList,
+        this.ebinaPosition
+      );
     }
     console.log('markerList!!', this.markerList);
   }
@@ -149,6 +153,7 @@ export class PictureListComponent implements OnInit {
     //localStrageのroadsデータからroadを取得
     var roads = JSON.parse(localStorage.getItem('roads-data'));
     this.road = roads.find((v) => v.folderId === this.folderName);
+    console.log('this.road!', this.road);
 
     // //DEBUG Road情報表示
     // this.route.paramMap.subscribe((params) => {
@@ -166,21 +171,21 @@ export class PictureListComponent implements OnInit {
     //   );
     // });
 
-    //DEBUG Exif情報
-    this.route.paramMap.subscribe((params) => {
-      const exifObservable = this.roadService.getExifListById(
-        params.get('roadId')
-      );
-      exifObservable.subscribe(
-        (data) => {
-          this.road = data[0];
-          console.log('this.road!', this.road);
-        },
-        (err) => {
-          console.error('次のエラーが発生しました： ' + err);
-        }
-      );
-    });
+    // //DEBUG Exif情報
+    // this.route.paramMap.subscribe((params) => {
+    //   const exifObservable = this.roadService.getExifListById(
+    //     params.get('roadId')
+    //   );
+    //   exifObservable.subscribe(
+    //     (data) => {
+    //       this.road = data[0];
+    //       console.log('this.road!', this.road);
+    //     },
+    //     (err) => {
+    //       console.error('次のエラーが発生しました： ' + err);
+    //     }
+    //   );
+    // });
 
     //get roadExifs
     this.route.paramMap.subscribe((params) => {
