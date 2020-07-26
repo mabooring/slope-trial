@@ -17,6 +17,11 @@ interface DMS {
   minute: number;
   second: number;
 }
+// 海老名
+const ebinaPoint: PointInDMS = {
+  lat: { degree: 35, minute: 27, second: 9.421 },
+  lng: { degree: 139, minute: 23, second: 27.124 },
+};
 
 @Injectable()
 export class mapService {
@@ -81,12 +86,7 @@ export class mapService {
         },
       };
     } else {
-      // 東京
-      const tokyoPoint: PointInDMS = {
-        lat: { degree: 35, minute: 10, second: 14.750831946755408 },
-        lng: { degree: 139, minute: 4, second: 3.843912007846434 },
-      };
-      location = tokyoPoint;
+      location = ebinaPoint;
     }
 
     // console.log('Location!!!', location);
@@ -110,7 +110,8 @@ export class mapService {
     }
 
     var center_position: google.maps.LatLngLiteral;
-    // if (Object.keys(markerList['location'] !== 0)) {
+    // console.log('markerList!', markerList);
+
     if (Object.keys(markerList.length !== 0)) {
       var jsonMarkerList = JSON.stringify(markerList);
       var parsedMarkerList = JSON.parse(jsonMarkerList);
@@ -121,7 +122,12 @@ export class mapService {
       //   'markerList[center_index].location!',
       //   markerList[center_index].location
       // );
-      center_position = markerList[center_index].location;
+      if (isNaN(markerList[center_index].location.lat) === false) {
+        center_position = markerList[center_index].location;
+      } else {
+        // console.log('center_position is defaultPosition!!!');
+        center_position = defaultPosition;
+      }
     } else {
       center_position = defaultPosition;
     }

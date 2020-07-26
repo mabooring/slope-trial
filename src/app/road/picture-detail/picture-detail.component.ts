@@ -72,6 +72,8 @@ export class PictureDetailComponent implements OnInit {
           //DEBUG map
           var fileName = this.exif.FileName;
 
+          //DEBUG
+
           var location = {
             lat: {
               degree: this.exif.gps.GPSLatitude[0],
@@ -84,6 +86,7 @@ export class PictureDetailComponent implements OnInit {
               second: this.exif.gps.GPSLongitude[2],
             },
           };
+
           // console.log('Location!!!', location);
           //Degreeフォーマット変換
           var latlng: google.maps.LatLngLiteral = this.mapService.degreeMinuteSecond2Degree(

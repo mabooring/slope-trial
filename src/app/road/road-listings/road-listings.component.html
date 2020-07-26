@@ -7,24 +7,26 @@
   </div>
   <div class="container">
     <br />
-    <div class="row">
-      <!-- <div *ngFor="let road of roads; index as roadId" class="col-sm"> -->
-      <div *ngFor="let road of roads; let i = index" class="col-sm">
-        <a [routerLink]="[road.folderId]">
-          <div class="card-deck">
-            <div class="card">
-              <img src="{{ road.coverimg }}" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <div class="card-text">
-                  <h5 class="card-title">{{ road.area }}</h5>
-                  <p class="card-text">{{ road.prefecture }}</p>
-                  <p class="card-text">{{ road.members }}</p>
-                  <p class="card-text">{{ dateData[i] }}</p>
+    <div class="card-deck">
+      <div class="row">
+        <!-- <div *ngFor="let road of roads; index as roadId" class="col-sm"> -->
+        <div *ngFor="let road of roads; let i = index" class="col-sm-4">
+          <a [routerLink]="[road.folderId]">
+            <div class="card-deck">
+              <div class="card">
+                <img src="{{ road.coverimg }}" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <div class="card-text">
+                    <h5 class="card-title">{{ road.area }}</h5>
+                    <p class="card-text">{{ road.prefecture }}</p>
+                    <p class="card-text">{{ road.members }}</p>
+                    <p class="card-text">{{ dateData[i] }}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </div>
   </div>
