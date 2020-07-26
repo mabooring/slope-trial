@@ -72,16 +72,18 @@ class exif_model {
 
   //全階層のファイルを２次元配列で取得
   getAllFilesFromFolder(dir) {
-    const results = [];
+    var results = [];
+    var self = this;
 
     fs.readdirSync(dir).forEach(function (file) {
       file = dir + "/" + file;
-      const stat = fs.statSync(file);
+      var stat = fs.statSync(file);
 
       if (stat && stat.isDirectory()) {
-        results = results.concat(_getAllFilesFromFolder(file));
+        results = results.concat(self.getAllFilesFromFolder(file));
       } else results.push(file);
     });
+    // console.log(results);
     return results;
   }
 

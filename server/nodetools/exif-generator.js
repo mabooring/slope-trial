@@ -10,68 +10,56 @@ const ExifModel = require("./exif-model");
   exifファイル生成
   使い方：
   >node exif-generator.js
+  その後　ファイルの最初と最後に[]を書き込む
 ################################*/
 
 var exifModel = new ExifModel();
 // 親フォルダーからのファイルリストを取得
-// const folderPath = "/Volumes/SSD256/DATA/S3_Upload_Data/images";
-const folderPath =
-  "/Volumes/SSD256/DATA/download/s-trial-test-images/images/Hakone-A1";
+var folderPath =
+  // "/Volumes/SSD256/DATA/download/s-trial-test-images/images/Hakone-A1";
+  "/Volumes/SSD256/DATA/download/s-trial-test-images/images";
+
 // フォルダー名を取得
 const pathPart = folderPath.split("/");
 const folderName = pathPart[pathPart.length - 1];
 
-// const jpegFiles = exifModel.getAllFilesFromFolder(folderPath);
-const jpegFiles = exifModel.getFilesFromFolder(folderPath);
+const jpegFiles = exifModel.getAllFilesFromFolder(folderPath);
+console.log("jpegFiles", jpegFiles);
 
 //出力ファイル名
 const outFileName = "jsonresults" + "/" + folderName + ".json";
 fs.unlink(outFileName, (err) => {});
-console.log(outFileName);
+console.log("%sをファイル出力しました", outFileName);
 
 //ファイル出力
 // genExifHeader();
 genExifContent();
 // genExifFooter();
 
-// genExifHeader();
-// genExifContent((error) => {
-//   if (error) console.log("error!");
-//   else genExifFooter();
-// });
-
-// genExifHeader(() => {
-//   console.log("header written!");
-//   genExifContent(() => {
-//     console.log("data & commma written!");
-//     genExifFooter(() => {
-//       console.log("footer written!");
-//     });
-//   });
-// });
-
 function genExifHeader() {
-  // fs.appendFileSync(outFileName, "[");
-  fs.writeFileSync(outFileName, "[");
+  // fs.writeFileSync(outFileName, "[");
+  fs.writeFileSync(outFileName, "[", (err) => {
+    if (err) console.log(`error!::${err}`);
+  });
 }
 function genExifFooter() {
   // fs.appendFileSync(outFileName, "]");
-  fs.appendFileSync(outFileName, "]");
+  fs.appendFileSync(outFileName, "]", (err) => {
+    if (err) console.log(`error!::${err}`);
+  });
 }
 function genExifConnma() {
-  // fs.appendFileSync(outFileName, "]");
-  fs.appendFileSync(outFileName, ",");
-  // console.log("conmma written!");
-}
-async function writeExifFile(outFileName, exifData) {
-  fs.appendFileSync(outFileName, JSON.stringify(exifData));
+  // fs.appendFileSync(outFileName, ",");
+  fs.appendFileSync(outFileName, ",", (err) => {
+    if (err) console.log(`error!::${err}`);
+  });
 }
 
-async function genExifContent() {
+function genExifContent() {
   jpegFiles.forEach((file, index) => {
     sharp(file)
       .metadata()
-      .then(function (metadata) {
+      .then(async function (metadata) {
         const readExifData = exif(metadata.exif);
         const exifData = exifModel.ExifData;
         const exifTable = exifModel.ExifTable;
@@ -84,11 +72,11 @@ async function genExifContent() {
         //各プロパティをセット
         exifModel.setExifProperty(exifTable, readExifData, exifData);
 
-        // console.log(exifData);
-
         //jsonファイル出力
         // const wfile = await writeExifFile(outFileName, exifData);
-        fs.appendFileSync(outFileName, JSON.stringify(exifData));
+        fs.appendFileSync(outFileName, JSON.stringify(exifData), (err) => {
+          if (err) console.log(`error!::${err}`);
+        });
 
         // fs.appendFileSync(outFileName, ",");
         genExifConnma();
