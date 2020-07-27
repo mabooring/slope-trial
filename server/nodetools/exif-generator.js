@@ -10,7 +10,7 @@ const ExifModel = require("./exif-model");
   exifファイル生成
   使い方：
   >node exif-generator.js
-  その後　ファイルの最初と最後に[]を書き込む
+  その後　ファイルの最後の,を消す
 ################################*/
 
 var exifModel = new ExifModel();
@@ -21,29 +21,28 @@ var folderPath =
 
 // フォルダー名を取得
 const pathPart = folderPath.split("/");
-const folderName = pathPart[pathPart.length - 1];
+const parentFolderName = pathPart[pathPart.length - 1];
 
 const jpegFiles = exifModel.getAllFilesFromFolder(folderPath);
 console.log("jpegFiles", jpegFiles);
 
 //出力ファイル名
-const outFileName = "jsonresults" + "/" + folderName + ".json";
+const outFileName = "jsonresults" + "/" + parentFolderName + ".json";
 fs.unlink(outFileName, (err) => {});
-console.log("%sをファイル出力しました", outFileName);
 
 //ファイル出力
-// genExifHeader();
+genExifHeader();
 genExifContent();
-// genExifFooter();
+setTimeout(() => {
+  genExifFooter();
+}, 1000);
 
 function genExifHeader() {
-  // fs.writeFileSync(outFileName, "[");
   fs.writeFileSync(outFileName, "[", (err) => {
     if (err) console.log(`error!::${err}`);
   });
 }
 function genExifFooter() {
-  // fs.appendFileSync(outFileName, "]");
   fs.appendFileSync(outFileName, "]", (err) => {
     if (err) console.log(`error!::${err}`);
   });
@@ -64,7 +63,9 @@ function genExifContent() {
         const exifData = exifModel.ExifData;
         const exifTable = exifModel.ExifTable;
 
-        //FolderNameプロパティをjpegファイル名からセット
+        //FolderNameプロパティをpathからセット
+        const pathPart = file.split("/");
+        const folderName = pathPart[pathPart.length - 2];
         exifModel.setValue(exifData, "FolderName", folderName);
 
         //FileNameプロパティをjpegファイル名からセット
