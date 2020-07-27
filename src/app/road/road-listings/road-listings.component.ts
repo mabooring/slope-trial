@@ -30,6 +30,7 @@ export class RoadListComponent implements OnInit {
         // localStorage.setItem('roads-data', data);
         this.roads = data;
         this.setFormattedDate(this.roads);
+        console.log('roads!!', this.roads);
       },
       (err) => {
         console.error('次のエラーが発生しました： ' + err);

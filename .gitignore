@@ -47,3 +47,6 @@ Thumbs.db
 
 # Config Files
 /server/config/dev.js
+
+# json Resut Files
+/server/nodetools/jsonresults/
